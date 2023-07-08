@@ -1,0 +1,132 @@
+.search-form {
+  width: 100%;
+  max-width: 1280px;
+  padding-bottom: 70px;
+  border-bottom: 1px solid #424242;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 41px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 768px) {
+  .search-form {
+    padding-bottom: 51px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .search-form {
+    padding-bottom: 50px;
+    padding-right: 4px;
+    padding-left: 4px;
+  }
+}
+
+.search-form__input-container {
+  border-radius: 40px;
+  background: #2F2F2F;
+  height: 46px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-right: 6px;
+  box-sizing: border-box;
+  transition: background-color .2s linear;
+}
+
+.search-form__text-input {
+  flex-grow: 1;
+  margin: 0;
+  padding: 0 0 0 22px;
+  border: none;
+  background: transparent;
+  border-radius: 40px 0 0 40px;
+  color: #8B8B8B;
+  font-size: 13px;
+  font-family: 'Inter', -apple-system, 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+  line-height: 17px;
+  height: 100%;
+  min-width: 100px;
+}
+
+.search-form__text-input:focus-visible {
+  outline: none;
+}
+
+.search-form__submit {
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: 80px;
+  height: 34px;
+  background: url("../../images/find.svg") no-repeat transparent;
+  cursor: pointer;
+  transition: opacity .3s linear;
+  border-radius: 40px;
+}
+.search-form__submit:hover {
+  opacity: .8;
+}
+
+.search-form__switch-label {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #FFF;
+  font-size: 14px;
+  font-family: 'Inter', -apple-system, 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+  line-height: 18px;
+}
+
+@media screen and (max-width: 520px) {
+  .search-form__switch-label {
+    font-size: 11px;
+  }
+}
+
+.search-form__switch-body {
+  position: relative;
+  width: 36px;
+  height: 20px;
+}
+
+.search-form__switch-checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.search-form__switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #2F2F2F;
+  transition: .4s;
+  border-radius: 10px;
+  box-shadow: #1C1C1CFF 0 5px 3px;
+}
+
+.search-form__switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 0;
+  bottom: 0;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.search-form__switch-checkbox:checked + .search-form__switch-slider:before {
+  transform: translateX(16px);
+  background: rgb(61, 220, 132);
+}
+
