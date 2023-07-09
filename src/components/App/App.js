@@ -1,4 +1,3 @@
-import React from 'react';
 import "./App.css";
 import Header from "../Header/Header";
 import {Route, Routes, useNavigate} from "react-router-dom";
@@ -10,14 +9,29 @@ import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import Footer from "../Footer/Footer";
 import NotFound from "../NotFound/NotFound";
+import {useEffect, useState} from "react";
+import mainApi from "../../utils/MainApi";
 
 function App() {
-  const [ signedIn, setSignedIn ] = React.useState(false);
+  const [ signedIn, setSignedIn ] = useState(false);
+  const [savedMovies, setSavedMovies] = useState([]);
   const navigate = useNavigate();
 
-  const handleSignIn = () => {
-    setSignedIn(true);
-    navigate('/movies', { replace: true })
+  useEffect(() => {
+    mainApi.getMovies()
+      .then((movies) => {
+        setSavedMovies(movies)
+      })
+      .catch((err) => console.log(err))
+  })
+
+  const handleSignIn = ({ email, password }) => {
+    mainApi.signIn({ email, password })
+      .then(() => {
+        navigate('/movies', { replace: true })
+        setSignedIn(true);
+      })
+      .catch((err) => console.log(err))
   }
   const handleSignOut = () => {
     setSignedIn(false);

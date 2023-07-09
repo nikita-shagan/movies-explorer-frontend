@@ -27,6 +27,7 @@ function AboutMe({ children }) {
               href='https://github.com/nikita-shagan'
               className='about-me__git-repos'
               target='_blank'
+              rel="noreferrer"
             >
               Github
             </a>
