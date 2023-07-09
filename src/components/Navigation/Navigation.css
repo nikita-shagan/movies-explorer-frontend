@@ -1,0 +1,248 @@
+.navigation {
+  display: flex;
+}
+
+.navigation__sign {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  gap: 30px;
+}
+
+@media screen and (max-width: 520px) {
+  .navigation__sign {
+    gap: 14px;
+  }
+}
+
+.navigation__sign_hidden {
+  display: none;
+}
+
+.navigation__sign-up {
+  color: #FFF;
+  text-align: right;
+  font-size: 12px;
+  font-family: 'Inter', -apple-system, 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+  font-weight: 500;
+  line-height: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity .2s ease-in-out;
+}
+
+.navigation__sign-up:hover {
+  opacity: .7;
+}
+
+@media screen and (max-width: 520px) {
+  .navigation__sign-up {
+    font-size: 10px;
+  }
+}
+
+.navigation__sign-in {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  background: #3DDC84;
+  color: #000;
+  font-size: 12px;
+  font-family: 'Inter', -apple-system, 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+  font-weight: 500;
+  line-height: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .2s ease-in-out;
+}
+
+.navigation__sign-in:hover {
+  background: #31b76d;
+}
+
+@media screen and (max-width: 520px) {
+  .navigation__sign-in {
+    width: 54px;
+    height: 26px;
+    font-size: 10px;
+  }
+}
+
+.navigation__signed-menu-button {
+  width: 44px;
+  height: 44px;
+  display: none;
+  transition: opacity .2s ease-in-out;
+}
+
+.navigation__signed-menu-button:hover {
+  opacity: .7;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation__signed-menu-button {
+    display: block;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .navigation__signed-menu-button {
+    width: 40px;
+    height: 43px;
+  }
+}
+
+.navigation__signed {
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation__signed {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .3);
+  }
+}
+
+.navigation__signed_visible {
+  display: flex;
+  z-index: 999;
+}
+
+.navigation__signed-container {
+  position: relative;
+  display: flex;
+  gap: 61px;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation__signed-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 520px;
+    height: 100vh;
+    background: #202020;
+    flex-direction: column;
+    gap: 61.5vh;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .navigation__signed-container {
+    width: 100vw;
+  }
+}
+
+.navigation__signed-close-button {
+  display: none;
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  cursor: pointer;
+  transition: opacity .2s ease-in-out;
+}
+
+.navigation__signed-close-button:hover {
+  opacity: .7;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation__signed-close-button {
+    display: block;
+  }
+}
+
+.navigation__signed-items {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  gap: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation__signed-items {
+    flex-direction: column;
+    margin-top: 15.5vh;
+  }
+}
+
+.navigation__signed-item {
+  color: #FFF;
+  font-size: 14px;
+  font-family: 'Inter', -apple-system, 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+  line-height: 18px;
+  text-decoration: none;
+  display: block;
+  transition: opacity .2s ease-in-out;
+}
+
+.navigation__signed-item:hover {
+  opacity: .7;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation__signed-item {
+    color: #FFF;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+  }
+}
+
+.navigation__signed-item_active {
+  font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation__signed-item_active {
+    text-decoration: underline;
+    text-underline-offset: 8px;
+  }
+}
+
+.navigation__signed-item_extra {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation__signed-item_extra {
+    display: block;
+  }
+}
+
+.navigation__signed-profile {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  justify-content: center;
+  transition: opacity .2s ease-in-out;
+}
+
+.navigation__signed-profile:hover {
+  opacity: .7;
+}
+
+.navigation__signed-profile-text {
+  color: #FFF;
+  font-size: 13px;
+  font-family: 'Inter', -apple-system, 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+  font-weight: 500;
+  line-height: 12px;
+  padding: 0 7px 0 0;
+  margin: 0;
+}
