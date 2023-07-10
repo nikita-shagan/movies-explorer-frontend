@@ -23,7 +23,7 @@ function App() {
         setSavedMovies(movies)
       })
       .catch((err) => console.log(err))
-  })
+  }, [])
 
   const handleSignIn = ({ email, password }) => {
     mainApi.signIn({ email, password })
@@ -53,7 +53,7 @@ function App() {
           />
           <Route
               path="/movies"
-              element={<Movies/>}
+              element={<Movies savedMovies={savedMovies}/>}
           />
           <Route
               path="/saved-movies"

@@ -14,6 +14,7 @@ export default class Api {
     const options = {
       headers: this._headers,
       method: method,
+      credentials: 'include'
     }
 
     if (body) {
