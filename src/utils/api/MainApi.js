@@ -39,5 +39,5 @@ class MainApi extends Api {
   }
 }
 
-const mainApi = new MainApi('https://explorer.nomoreparties.sbs');
+const mainApi = new MainApi('https://api.explorer.nomoreparties.sbs');
 export default mainApi;
