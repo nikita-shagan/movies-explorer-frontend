@@ -9,6 +9,19 @@ import Preloader from "../Preloader/Preloader";
 import mainApi from "../../utils/api/MainApi";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import {filterMovies} from "../../utils/filters/moviesFilters";
+import {
+  DESKTOP_MOVIES_COUNT,
+  LOCAL_STORAGE_KEY_WORD,
+  LOCAL_STORAGE_MOVIES,
+  LOCAL_STORAGE_SHORTS_TOGGLE,
+  MOBILE_MOVIES_COUNT,
+  MOBILE_SCREEN_RESOLUTION,
+  MOVIES_API_URL,
+  SEARCH_EMPTY_STATE,
+  SEARCH_ERROR_STATE,
+  SEARCH_LIST_STATE,
+  SEARCH_LOADING_STATE
+} from "../../utils/constants/constants";
 
 function Movies({ savedMovies, setSavedMovies }) {
   const [keyWord, setKeyWord] = useState('');
@@ -17,26 +30,33 @@ function Movies({ savedMovies, setSavedMovies }) {
   const [searchedMovies, setSearchedMovies] = useState([]);
   const [moviesCount , setMoviesCount] = useState(7);
   const [moviesCountStep , setMoviesCountStep] = useState(7);
-  const [moviesState, setMoviesState] = useState('list')
+  const [moviesState, setMoviesState] = useState(SEARCH_LIST_STATE)
   const currentUser = useContext(CurrentUserContext);
+
+  const updateSearchResults = (movies, keyWord, shortFilmsToggle) => {
+    const newSearchedMovies = filterMovies(movies, keyWord, shortFilmsToggle);
+    setSearchedMovies(newSearchedMovies);
+    setMoviesState(newSearchedMovies.length ? SEARCH_LIST_STATE : SEARCH_EMPTY_STATE)
+  }
 
   useEffect(() => {
     const handleWindowChange = () => {
-      if (window.innerWidth <= 520) {
-        setMoviesCount(5);
-        setMoviesCountStep(5);
+      if (window.innerWidth <= MOBILE_SCREEN_RESOLUTION) {
+        setMoviesCount(MOBILE_MOVIES_COUNT);
+        setMoviesCountStep(MOBILE_MOVIES_COUNT);
       } else {
-        setMoviesCount(7);
-        setMoviesCountStep(7);
+        setMoviesCount(DESKTOP_MOVIES_COUNT);
+        setMoviesCountStep(DESKTOP_MOVIES_COUNT);
       }
     }
 
-    const storedKeyWord = localStorage.getItem('keyWord');
+    const storedKeyWord = localStorage.getItem(LOCAL_STORAGE_KEY_WORD);
     if (storedKeyWord !== null) {
-      const storedMovies = JSON.parse(localStorage.getItem('storedMovies'));
-      const storedShortFilmsToggle = JSON.parse(localStorage.getItem('shortFilmsToggle'));
+      const storedMovies = JSON.parse(localStorage.getItem(LOCAL_STORAGE_MOVIES));
+      const storedShortFilmsToggle = JSON.parse(localStorage.getItem(LOCAL_STORAGE_SHORTS_TOGGLE));
+
+      updateSearchResults(storedMovies, storedKeyWord, storedShortFilmsToggle)
       setMovies(storedMovies);
-      setSearchedMovies(filterMovies(storedMovies, storedKeyWord, storedShortFilmsToggle));
       setKeyWord(storedKeyWord);
       setShortFilmsToggle(storedShortFilmsToggle);
     }
@@ -55,28 +75,31 @@ function Movies({ savedMovies, setSavedMovies }) {
 
   const handleShortFilmsToggleChange = (evt) => {
     const newShortFilmsToggle = evt.target.checked;
+    const storedKeyWord = localStorage.getItem(LOCAL_STORAGE_KEY_WORD);
+
     setShortFilmsToggle(newShortFilmsToggle);
-    setSearchedMovies(filterMovies(movies, keyWord, newShortFilmsToggle));
+    updateSearchResults(movies, storedKeyWord, newShortFilmsToggle);
+    localStorage.setItem(LOCAL_STORAGE_SHORTS_TOGGLE, JSON.stringify(newShortFilmsToggle))
   }
 
   const handleSearchSubmit = ({ keyWord, shortFilmsToggle }) => {
     if (movies.length) {
-      setSearchedMovies(filterMovies(movies, keyWord, shortFilmsToggle));
+      updateSearchResults(movies, keyWord, shortFilmsToggle);
+      localStorage.setItem(LOCAL_STORAGE_KEY_WORD, keyWord)
+      localStorage.setItem(LOCAL_STORAGE_SHORTS_TOGGLE, JSON.stringify(shortFilmsToggle))
     } else {
-      setMoviesState('loading');
+      setMoviesState(SEARCH_LOADING_STATE);
       moviesApi.getMovies()
         .then((movies) => {
-          const newSearchedMovies = filterMovies(movies, keyWord, shortFilmsToggle);
-          localStorage.setItem('storedMovies', JSON.stringify(movies))
-          localStorage.setItem('keyWord', keyWord)
-          localStorage.setItem('shortFilmsToggle', JSON.stringify(shortFilmsToggle))
+          updateSearchResults(movies, keyWord, shortFilmsToggle);
           setMovies(movies)
-          setMoviesState(newSearchedMovies.length ? 'list' : 'empty')
-          setSearchedMovies(newSearchedMovies);
+          localStorage.setItem(LOCAL_STORAGE_MOVIES, JSON.stringify(movies))
+          localStorage.setItem(LOCAL_STORAGE_KEY_WORD, keyWord)
+          localStorage.setItem(LOCAL_STORAGE_SHORTS_TOGGLE, JSON.stringify(shortFilmsToggle))
         })
         .catch((err) => {
           console.log(err)
-          setMoviesState('error')
+          setMoviesState(SEARCH_ERROR_STATE)
         });
     }
   }
@@ -86,7 +109,7 @@ function Movies({ savedMovies, setSavedMovies }) {
   }
 
   const isMoreButtonHidden = () => {
-    return moviesCount >= searchedMovies.length || moviesState !== 'list';
+    return moviesCount >= searchedMovies.length || moviesState !== SEARCH_LIST_STATE;
   }
 
   const onLikeMovie = ({ updated_at, created_at, image, id, ...cardData }, isLiked) => {
@@ -98,8 +121,8 @@ function Movies({ savedMovies, setSavedMovies }) {
     } else {
       mainApi.createMovie({
         ...cardData,
-        image: `https://api.nomoreparties.co${image.url}`,
-        thumbnail: `https://api.nomoreparties.co${image.formats.thumbnail.url}`,
+        image: `${MOVIES_API_URL}${image.url}`,
+        thumbnail: `${MOVIES_API_URL}${image.formats.thumbnail.url}`,
         owner: currentUser._id,
         movieId: id,
       })
@@ -119,12 +142,12 @@ function Movies({ savedMovies, setSavedMovies }) {
         onShortFilmsChange={handleShortFilmsToggleChange}
       />
 
-      {moviesState === 'loading' && <Preloader/>}
+      {moviesState === SEARCH_LOADING_STATE && <Preloader/>}
 
-      {moviesState === 'empty' && <p>Ничего не найдено</p>}
+      {moviesState === SEARCH_EMPTY_STATE && <p>Ничего не найдено</p>}
 
       {
-        moviesState === 'list' &&
+        moviesState === SEARCH_LIST_STATE &&
           <MoviesCardList
             onLikeCard={onLikeMovie}
             cards={searchedMovies}
@@ -134,7 +157,7 @@ function Movies({ savedMovies, setSavedMovies }) {
       }
 
       {
-        moviesState === 'error' &&
+        moviesState === SEARCH_ERROR_STATE &&
           <p className='movies-section__error'>
             Во время запроса произошла ошибка. Возможно, проблема с соединением
             или сервер недоступен. Подождите немного и попробуйте ещё раз.

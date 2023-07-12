@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
+import {FIELD_INITIALLY_INVALID} from "../utils/constants/constants";
 
 export function useFormWithValidation({ initValues = {}, validators }) {
   const initErrors = {};
   Object.keys(validators).forEach((name) => {
     const isInvalid = validators[name](initValues[name] || '').length > 0
-    initErrors[name] = isInvalid ? 'initiallyInvalid' : ''
+    initErrors[name] = isInvalid ? FIELD_INITIALLY_INVALID : ''
   })
 
   const [values, setValues] = useState(initValues);
@@ -30,7 +31,7 @@ export function useFormWithValidation({ initValues = {}, validators }) {
     setSubmitResultMessage('');
   };
 
-  const getError = (name) => errors[name] === 'initiallyInvalid' ? '' : errors[name]
+  const getError = (name) => errors[name] === FIELD_INITIALLY_INVALID ? '' : errors[name]
 
   return {
     values,

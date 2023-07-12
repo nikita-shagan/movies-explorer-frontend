@@ -6,8 +6,15 @@ import {useNavigate} from "react-router-dom";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import {useContext, useEffect} from "react";
 import {validateEmail, validateName} from "../../utils/validation/inputValidations";
+import {
+  LOCAL_STORAGE_KEY_WORD,
+  LOCAL_STORAGE_MOVIES, LOCAL_STORAGE_SHORTS_TOGGLE,
+  PROFILE_UPDATE_ERROR_MESSAGE,
+  PROFILE_UPDATE_SUCCESS_MESSAGE
+} from "../../utils/constants/constants";
+import {MAIN_ROUTE} from "../../utils/constants/routes";
 
-function Profile({ setCurrentUser, setSignedIn }) {
+function Profile({ setCurrentUser, setSavedMovies, setSignedIn }) {
   const navigate = useNavigate();
   const currentUser = useContext(CurrentUserContext);
 
@@ -35,10 +42,10 @@ function Profile({ setCurrentUser, setSignedIn }) {
       .then(() => mainApi.getUser())
       .then((user) => {
         setCurrentUser(user)
-        form.setSubmitResultMessage('Профиль успешно обновлен')
+        form.setSubmitResultMessage(PROFILE_UPDATE_SUCCESS_MESSAGE)
       })
       .catch((err) => {
-        form.setSubmitResultMessage('При редактировании профиля произошла ошибка')
+        form.setSubmitResultMessage(PROFILE_UPDATE_ERROR_MESSAGE)
         console.log(err)
       })
       .finally(() => form.setIsLoading(false))
@@ -47,8 +54,13 @@ function Profile({ setCurrentUser, setSignedIn }) {
   const handleSignOut = () => {
     mainApi.signOut()
       .then(() => {
+        localStorage.removeItem(LOCAL_STORAGE_KEY_WORD)
+        localStorage.removeItem(LOCAL_STORAGE_MOVIES)
+        localStorage.removeItem(LOCAL_STORAGE_SHORTS_TOGGLE)
         setSignedIn(false)
-        navigate('/', {replace: true})
+        setCurrentUser({})
+        setSavedMovies([])
+        navigate(MAIN_ROUTE, {replace: true})
       })
       .catch((err) => console.log(err))
   }

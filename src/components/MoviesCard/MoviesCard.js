@@ -1,5 +1,10 @@
 import "./MoviesCard.css"
 import {useLocation} from "react-router-dom";
+import {
+  MINUTES_IN_HOUR,
+  MOVIES_API_URL
+} from "../../utils/constants/constants";
+import {MOVIES_ROUTE, SAVED_MOVIES_ROUTE} from "../../utils/constants/routes";
 
 function MoviesCard({ isLiked, card, onLikeCard, onDeleteCard }) {
   const currentPath = useLocation().pathname;
@@ -27,15 +32,15 @@ function MoviesCard({ isLiked, card, onLikeCard, onDeleteCard }) {
             {card.nameRU}
           </h3>
           <p className='movies-card__subtitle'>
-            {Math.trunc(card.duration / 60)}ч {card.duration % 60}м
+            {Math.trunc(card.duration / MINUTES_IN_HOUR)}ч {card.duration % MINUTES_IN_HOUR}м
           </p>
         </div>
         {
-          currentPath === '/saved-movies' &&
+          currentPath === SAVED_MOVIES_ROUTE &&
             <button onClick={handleDeleteClick} className='movies-card__delete'/>
         }
         {
-          currentPath === '/movies' &&
+          currentPath === MOVIES_ROUTE &&
             <button
               className={`movies-card__like ${isLiked && 'movies-card__like_active'}`}
               onClick={handleLikeClick}
@@ -43,7 +48,7 @@ function MoviesCard({ isLiked, card, onLikeCard, onDeleteCard }) {
         }
       </div>
       <img
-        src={card.image.url ? `https://api.nomoreparties.co${card.image.url}` : card.image}
+        src={card.image.url ? `${MOVIES_API_URL}${card.image.url}` : card.image}
         alt='Обложка фильма'
         className='movies-card__image'
       />

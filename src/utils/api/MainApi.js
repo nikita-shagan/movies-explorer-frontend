@@ -1,4 +1,5 @@
 import Api from "./Api";
+import {MAIN_API_URL} from "../constants/constants";
 
 class MainApi extends Api {
   constructor(url) {
@@ -39,5 +40,5 @@ class MainApi extends Api {
   }
 }
 
-const mainApi = new MainApi('https://api.explorer.nomoreparties.sbs');
+const mainApi = new MainApi(MAIN_API_URL);
 export default mainApi;

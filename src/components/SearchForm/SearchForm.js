@@ -1,5 +1,6 @@
 import "./SearchForm.css"
 import {useState} from "react";
+import {KEY_WORD_ERROR} from "../../utils/constants/constants";
 
 function SearchForm({ onSubmit, keyWord, onKeyWordChange, shortFilmsToggle, onShortFilmsChange }) {
   const [keyWordError, setKeyWordError] = useState('')
@@ -14,7 +15,7 @@ function SearchForm({ onSubmit, keyWord, onKeyWordChange, shortFilmsToggle, onSh
     if (keyWord) {
       onSubmit({ keyWord, shortFilmsToggle });
     } else {
-      setKeyWordError('Нужно ввести ключевое слово')
+      setKeyWordError(KEY_WORD_ERROR)
     }
   }
 

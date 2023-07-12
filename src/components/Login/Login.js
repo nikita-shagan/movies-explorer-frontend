@@ -2,6 +2,8 @@ import SignForm from "../SignForm/SignForm";
 import {useFormWithValidation} from "../../hooks/useFromWithValidation";
 import Input from "../Input/Input";
 import {validateEmail, validatePassword} from "../../utils/validation/inputValidations";
+import {FORM_SUBMIT_ERROR_MESSAGE} from "../../utils/constants/constants";
+import {SIGNUP_ROUTE} from "../../utils/constants/routes";
 
 function Login({ handleAuth }) {
   const form = useFormWithValidation({
@@ -20,7 +22,7 @@ function Login({ handleAuth }) {
     form.setIsLoading(true)
     handleAuth(form.values)
       .catch((err) => {
-        setTimeout(() => form.setSubmitResultMessage('Что то пошло не так...'), 500)
+        setTimeout(() => form.setSubmitResultMessage(FORM_SUBMIT_ERROR_MESSAGE), 500)
         console.log(err)
       })
       .finally(() => {
@@ -32,7 +34,7 @@ function Login({ handleAuth }) {
     <SignForm
       title='Рады видеть!'
       submitText='Войти'
-      footer={{text: 'Ещё не зарегистрированы?', link: '/signup', button: 'Регистрация'}}
+      footer={{text: 'Ещё не зарегистрированы?', link: {SIGNUP_ROUTE}, button: 'Регистрация'}}
       isValid={form.isValid}
       onSubmit={handleSubmit}
       submitError={form.submitResultMessage}

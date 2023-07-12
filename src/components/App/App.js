@@ -15,6 +15,15 @@ import FullScreenMask from "../FullScreenMask/FullScreenMask";
 import Preloader from "../Preloader/Preloader";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import {ProtectedRoute} from "../ProtectedRoute/ProtectedRoute";
+import {
+  ANY_ROUTE,
+  MAIN_ROUTE,
+  MOVIES_ROUTE,
+  PROFILE_ROUTE,
+  SAVED_MOVIES_ROUTE,
+  SIGNIN_ROUTE,
+  SIGNUP_ROUTE
+} from "../../utils/constants/routes";
 
 function App() {
   const [signedIn, setSignedIn] = useState(false);
@@ -40,7 +49,7 @@ function App() {
     return mainApi.signIn({ email, password })
       .then(() => {
         setSignedIn(true);
-        navigate('/movies', {replace: true});
+        navigate(MOVIES_ROUTE, {replace: true});
         Promise.all([mainApi.getUser(), mainApi.getMovies()])
           .then(([user, savedMovies]) => {
             setCurrentUser(user);
@@ -57,11 +66,11 @@ function App() {
         <main className='content'>
           <Routes>
             <Route
-              path='/'
+              path={MAIN_ROUTE}
               element={<Main/>}
             />
             <Route
-              path='/movies'
+              path={MOVIES_ROUTE}
               element={
                 <ProtectedRoute
                   signedIn={signedIn}
@@ -72,7 +81,7 @@ function App() {
               }
             />
             <Route
-              path='/saved-movies'
+              path={SAVED_MOVIES_ROUTE}
               element={
                 <ProtectedRoute
                   signedIn={signedIn}
@@ -83,26 +92,27 @@ function App() {
               }
             />
             <Route
-              path='/profile'
+              path={PROFILE_ROUTE}
               element={
                 <ProtectedRoute
                   signedIn={signedIn}
                   element={Profile}
                   setCurrentUser={setCurrentUser}
+                  setSavedMovies={setSavedMovies}
                   setSignedIn={setSignedIn}
                 />
               }
             />
             <Route
-              path='/signup'
-              element={signedIn ? <Navigate to='/'/> : <Register handleAuth={handleAuth}/>}
+              path={SIGNUP_ROUTE}
+              element={signedIn ? <Navigate to={MAIN_ROUTE}/> : <Register handleAuth={handleAuth}/>}
             />
             <Route
-              path='/signin'
-              element={signedIn ? <Navigate to='/'/> : <Login handleAuth={handleAuth}/>}
+              path={SIGNIN_ROUTE}
+              element={signedIn ? <Navigate to={MAIN_ROUTE}/> : <Login handleAuth={handleAuth}/>}
             />
             <Route
-              path='*'
+              path={ANY_ROUTE}
               element={<NotFound/>}
             />
           </Routes>

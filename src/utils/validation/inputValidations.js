@@ -1,15 +1,16 @@
 const { validate: isEmail } = require("email-validator");
-
-const slugRegex = /^[А-ЯA-ZёәіңғүұқөһӘІҢҒҮҰҚӨҺ\s-]+$/umi;
-const requiredError = 'Обязательное поле'
+const {SLUG_REGEX, REQUIRED_FIELD_ERROR, INVALID_EMAIL_ERROR,
+  INVALID_NAME_LENGTH_ERROR, INVALID_NAME_FORMAT_ERROR,
+  INVALID_PASSWORD_LENGTH_ERROR
+} = require("../constants/constants");
 
 module.exports.validateEmail = (value) => {
   if (!value) {
-    return requiredError;
+    return REQUIRED_FIELD_ERROR;
   }
 
   if (!isEmail(value)) {
-    return 'Некорректный email';
+    return INVALID_EMAIL_ERROR;
   }
 
   return '';
@@ -17,15 +18,15 @@ module.exports.validateEmail = (value) => {
 
 module.exports.validateName = (value) => {
   if (!value) {
-    return requiredError;
+    return REQUIRED_FIELD_ERROR;
   }
 
   if (value.length < 2 || value.length > 30) {
-    return 'Имя должно быть от 2 до 30 символов';
+    return INVALID_NAME_LENGTH_ERROR;
   }
 
-  if (!value.match(slugRegex)) {
-    return 'Имя должно содержать только латиницу, кириллицу, пробел или дефис.';
+  if (!value.match(SLUG_REGEX)) {
+    return INVALID_NAME_FORMAT_ERROR;
   }
 
   return '';
@@ -33,11 +34,11 @@ module.exports.validateName = (value) => {
 
 module.exports.validatePassword = (value) => {
   if (!value) {
-    return requiredError;
+    return REQUIRED_FIELD_ERROR;
   }
 
   if (value.length < 8) {
-    return 'Минимальная длина пароля: 8 символов'
+    return INVALID_PASSWORD_LENGTH_ERROR
   }
 
   return '';

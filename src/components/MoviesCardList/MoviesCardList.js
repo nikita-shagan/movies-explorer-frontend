@@ -1,7 +1,8 @@
 import "./MoviesCardList.css"
 import MoviesCard from "../MoviesCard/MoviesCard";
+import {DEFAULT_MOVIES_LIST_COUNT} from "../../utils/constants/constants";
 
-function MoviesCardList({ cards, savedCards, cardsCount = 99999, onLikeCard, onDeleteCard}) {
+function MoviesCardList({ cards, savedCards, cardsCount = DEFAULT_MOVIES_LIST_COUNT, onLikeCard, onDeleteCard}) {
   const isCardLiked = (cardId) => {
     return savedCards.some(({ movieId }) => movieId === cardId)
   }

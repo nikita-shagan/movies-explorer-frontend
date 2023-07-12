@@ -4,6 +4,11 @@ import close from '../../images/close.svg';
 import menuButton from '../../images/burger-button.svg'
 import {Link} from "react-router-dom";
 import profileImage from "../../images/account.svg"
+import {
+  MAIN_ROUTE,
+  MOVIES_ROUTE,
+  SAVED_MOVIES_ROUTE
+} from "../../utils/constants/routes";
 
 function Navigation({ currentPath, signedIn }) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
@@ -59,11 +64,11 @@ function Navigation({ currentPath, signedIn }) {
                 <ul className='navigation__signed-items'>
                   <li>
                     <Link
-                      to={'/'}
+                      to={MAIN_ROUTE}
                       className={`
                         navigation__signed-item
                         navigation__signed-item_extra
-                        ${currentPath === '/' && 'navigation__signed-item_active'}
+                        ${currentPath === MAIN_ROUTE && 'navigation__signed-item_active'}
                       `}
                       onClick={handleMobileMenyClose}
                     >
@@ -75,7 +80,7 @@ function Navigation({ currentPath, signedIn }) {
                       to={'movies'}
                       className={`
                         navigation__signed-item
-                        ${currentPath === '/movies' && 'navigation__signed-item_active'}
+                        ${currentPath === MOVIES_ROUTE && 'navigation__signed-item_active'}
                       `}
                       onClick={handleMobileMenyClose}
                     >
@@ -87,7 +92,7 @@ function Navigation({ currentPath, signedIn }) {
                       to={'saved-movies'}
                       className={`
                         navigation__signed-item
-                        ${currentPath === '/saved-movies' && 'navigation__signed-item_active'}
+                        ${currentPath === SAVED_MOVIES_ROUTE && 'navigation__signed-item_active'}
                       `}
                       onClick={handleMobileMenyClose}
                     >
