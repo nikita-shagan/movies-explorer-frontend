@@ -1,21 +1,21 @@
 export default class Api {
   constructor(url) {
     this._baseUrl = url
-    this._headers = {'Content-Type': 'application/json'}
+    this._options = {
+      headers: {'Content-Type': 'application/json'},
+    }
   }
 
   _validateQuery(res) {
     return res.ok
       ? res.json()
-      : Promise.reject(`Ошибка: ${res.status}`);
+      : Promise.reject({ code: res.status });
   }
 
-  _processQuery(path, method, body = null) {
-    const options = {
-      headers: this._headers,
-      method: method,
-      credentials: 'include'
-    }
+  processQuery(path, method, body = null) {
+    const options = { ...this._options }
+
+    options.method = method
 
     if (body) {
       options.body = JSON.stringify(body);

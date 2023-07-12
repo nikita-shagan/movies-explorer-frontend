@@ -1,17 +1,22 @@
 import "./MoviesCard.css"
 import {useLocation} from "react-router-dom";
 
-function MoviesCard({ isSaved, card }) {
+function MoviesCard({ isLiked, card, onLikeCard, onDeleteCard }) {
   const currentPath = useLocation().pathname;
 
   const handleCardClick = (evt) => {
-    if (!evt.target.classList.contains('movies-card__like')) {
+    const classes = evt.target.classList;
+    if (!(classes.contains('movies-card__like') || classes.contains('movies-card__delete'))) {
       window.open(card.trailerLink, '_blank')
     }
   }
 
   const handleLikeClick = () => {
-    console.log(card.nameRU)
+    onLikeCard(card, isLiked)
+  }
+
+  const handleDeleteClick = () => {
+    onDeleteCard(card._id)
   }
 
   return (
@@ -26,16 +31,19 @@ function MoviesCard({ isSaved, card }) {
           </p>
         </div>
         {
-          currentPath === '/saved-movies'
-            ? <button className='movies-card__delete'/>
-            : <button
-                className={`movies-card__like ${isSaved && 'movies-card__like_active'}`}
-                onClick={handleLikeClick}
-              />
+          currentPath === '/saved-movies' &&
+            <button onClick={handleDeleteClick} className='movies-card__delete'/>
+        }
+        {
+          currentPath === '/movies' &&
+            <button
+              className={`movies-card__like ${isLiked && 'movies-card__like_active'}`}
+              onClick={handleLikeClick}
+            />
         }
       </div>
       <img
-        src={`https://api.nomoreparties.co${card.image.url || card.image}`}
+        src={card.image.url ? `https://api.nomoreparties.co${card.image.url}` : card.image}
         alt='Обложка фильма'
         className='movies-card__image'
       />

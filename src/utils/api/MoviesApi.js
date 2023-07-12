@@ -1,8 +1,8 @@
 import Api from "./Api";
 
-class MoviesApi extends Api{
+class MoviesApi extends Api {
   getMovies() {
-    return this._processQuery('/beatfilm-movies', 'GET')
+    return this.processQuery('/beatfilm-movies', 'GET')
   }
 }
 

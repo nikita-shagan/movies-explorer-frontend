@@ -26,42 +26,22 @@
   }
 }
 
-.sign-form__input-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 30px;
-  color: #8B8B8B;
-  font-size: 10px;
-  font-family: 'Inter', -apple-system, 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+.sign-form__submit-container {
   position: relative;
+  width: 100%;
 }
 
-.sign-form__input {
-  height: 46px;
-  border-radius: 8px;
-  background: #2F2F2F;
-  margin: 0;
-  border: none;
-  padding: 0 0 0 15px;
-  color: #FFF;
-  font-size: 13px;
-  font-family: 'Inter', -apple-system, 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
-}
-
-.sign-form__input_state_error {
+.sign-form__submit-error {
   color: #EE3465;
-}
-
-.sign-form__error {
+  font-size: 14px;
+  font-family: 'Inter', -apple-system, 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
   position: absolute;
-  top: calc(100% + 3px);
-  color: #EE3465;
-  font-size: 10px;
-  font-family: 'Inter', -apple-system, 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .sign-form__submit-btn {
+  width: 100%;
   margin: 91px 0 0;
   padding: 0;
   border-radius: 3px;
@@ -76,7 +56,6 @@
   font-size: 14px;
   font-family: 'Inter', -apple-system, 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
   font-weight: 500;
-  transition: background-color .2s linear;
   cursor: pointer;
 }
 
@@ -88,6 +67,11 @@
 
 .sign-form__submit-btn:hover {
   background: #3b77da;
+}
+
+.sign-form__submit-btn:disabled {
+  background: #8d8d8d;
+  cursor: initial;
 }
 
 .sign-form__footer {
@@ -124,4 +108,8 @@
   .sign-form__footer-link {
     font-size: 12px;
   }
+}
+
+.sign-form__footer-link:hover {
+  opacity: .8;
 }

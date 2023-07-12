@@ -1,33 +1,74 @@
 import SignForm from "../SignForm/SignForm";
-import {Link} from "react-router-dom";
-import {useState} from "react";
+import Input from "../Input/Input";
+import { useFormWithValidation } from "../../hooks/useFromWithValidation";
+import mainApi from "../../utils/api/MainApi";
+import {validateEmail, validateName, validatePassword} from "../../utils/validation/inputValidations";
 
-function Register({ handleSignUp }) {
-  const [ errorsVisible, setErrorsVisible ] = useState(false);
-
-  const handleSubmit = ({ name, email, password, nameError, emailError, passwordError }) => {
-    if (nameError || emailError || passwordError) {
-      setErrorsVisible(true);
-    } else {
-      handleSignUp({ name, email, password });
+function Register({ handleAuth }) {
+  const form = useFormWithValidation({
+    initValues: {
+      name: '',
+      email: '',
+      password: ''
+    },
+    validators: {
+      name: validateName,
+      email: validateEmail,
+      password: validatePassword
     }
+  })
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    form.setIsLoading(true);
+    mainApi.signUp(form.values)
+      .then(() => handleAuth(form.values))
+      .catch((err) => {
+        console.log(err)
+        setTimeout(() => form.setSubmitResultMessage('Что то пошло не так...'), 500)
+      })
+      .finally(() => {
+        setTimeout(() => form.setIsLoading(false), 500)
+      })
   }
 
   return (
     <SignForm
-      formName='registration'
       title='Добро пожаловать!'
       submitText='Зарегистрироваться'
-      footer={
-        <>
-          <p className='sign-form__footer-text'>Уже зарегистрированы?</p>
-          <Link to='/signin' className='sign-form__footer-link'>Войти</Link>
-        </>
-      }
+      footer={{text: 'Уже зарегистрированы?', link: '/signin', button: 'Войти'}}
+      isValid={form.isValid}
       onSubmit={handleSubmit}
-      errorsVisible={errorsVisible}
-    />
+      submitError={form.submitResultMessage}
+      isLoading={form.isLoading}
+    >
+      <Input
+        label='Имя'
+        name='name'
+        type='text'
+        error={form.getError('name')}
+        value={form.values.name}
+        onChange={form.handleChange}
+      />
+      <Input
+        label='E-mail'
+        name='email'
+        type='email'
+        error={form.getError('email')}
+        value={form.values.email}
+        onChange={form.handleChange}
+      />
+      <Input
+        label='Пароль'
+        name='password'
+        type='password'
+        error={form.getError('password')}
+        value={form.values.password}
+        onChange={form.handleChange}
+      />
+    </SignForm>
   );
 }
+
 
 export default Register;

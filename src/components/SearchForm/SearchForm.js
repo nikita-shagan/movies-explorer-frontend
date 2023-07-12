@@ -1,23 +1,12 @@
 import "./SearchForm.css"
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
-function SearchForm({ onSubmit, initialKeyWord, initialShortFilmsToggle }) {
-  const [keyWord, setKeyWord] = useState('')
+function SearchForm({ onSubmit, keyWord, onKeyWordChange, shortFilmsToggle, onShortFilmsChange }) {
   const [keyWordError, setKeyWordError] = useState('')
-  const [shortFilmsToggle, setShortFilmsToggle] = useState(false)
-
-  useEffect(() => {
-    setKeyWord(initialKeyWord)
-    setShortFilmsToggle(initialShortFilmsToggle)
-  }, [initialKeyWord, initialShortFilmsToggle])
 
   const handleKeyWordChange = (evt) => {
-    setKeyWord(evt.target.value)
-    setKeyWordError('')
-  }
-
-  const handleShortFilmsChange = (evt) => {
-    setShortFilmsToggle(evt.target.checked);
+    setKeyWordError('');
+    onKeyWordChange(evt);
   }
 
   const handleSubmit = (evt) => {
@@ -53,7 +42,7 @@ function SearchForm({ onSubmit, initialKeyWord, initialShortFilmsToggle }) {
             type="checkbox"
             className='search-form__switch-checkbox'
             value=''
-            onChange={handleShortFilmsChange}
+            onChange={onShortFilmsChange}
             checked={shortFilmsToggle}
           />
           <span className="search-form__switch-slider"></span>

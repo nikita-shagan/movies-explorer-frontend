@@ -1,9 +1,9 @@
 import "./Preloader.css"
 
 
-function Preloader() {
+function Preloader({ size = 52 }) {
   return (
-    <div className='preloader'/>
+    <div className='preloader' style={{width: size, height: size}}/>
   )
 }
 
