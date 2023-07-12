@@ -34,7 +34,7 @@ function Login({ handleAuth }) {
     <SignForm
       title='Рады видеть!'
       submitText='Войти'
-      footer={{text: 'Ещё не зарегистрированы?', link: {SIGNUP_ROUTE}, button: 'Регистрация'}}
+      footer={{text: 'Ещё не зарегистрированы?', link: SIGNUP_ROUTE, button: 'Регистрация'}}
       isValid={form.isValid}
       onSubmit={handleSubmit}
       submitError={form.submitResultMessage}
