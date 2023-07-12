@@ -8,7 +8,7 @@ import moviesApi from "../../utils/api/MoviesApi";
 import Preloader from "../Preloader/Preloader";
 import mainApi from "../../utils/api/MainApi";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
-import { filterMovies } from "../../utils/filters/moviesFilters";
+import {filterMovies} from "../../utils/filters/moviesFilters";
 
 function Movies({ savedMovies, setSavedMovies }) {
   const [keyWord, setKeyWord] = useState('');
