@@ -11,3 +11,4 @@
 
 *   Github: https://github.com/nikita-shagan/movies-explorer-frontend
 *   Макет: https://disk.yandex.ru/d/9VFn0qZXYprsYQ
+*   Пулл реквест: https://github.com/nikita-shagan/movies-explorer-frontend/pull/2
