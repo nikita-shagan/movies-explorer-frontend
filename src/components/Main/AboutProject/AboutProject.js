@@ -1,9 +1,9 @@
-import './AboutProject.css'
+import "./AboutProject.css"
 
 function AboutProject() {
   return (
     <section className='about-project'>
-      <div className="about-project__container">
+      <div className='about-project__container'>
         <h2 className='about-project__title'>
           О проекте
         </h2>
@@ -31,30 +31,27 @@ function AboutProject() {
             </article>
           </li>
         </ul>
-        <ul className="about-project__time-scheme">
+        <ul className='about-project__time-scheme'>
           <li
-            className="
-            about-project__time-scheme-step
-            about-project__time-scheme-step_type_backend
-            "
+            className='about-project__time-scheme-stepabout-project__time-scheme-step_type_backend'
           >
             <p
-              className="
-                  about-project__time-scheme-step-period
-                  about-project__time-scheme-step-period_type_backend
-                "
+              className='
+                about-project__time-scheme-step-period
+                about-project__time-scheme-step-period_type_backend
+              '
             >
               1 неделя
             </p>
-            <p className="about-project__time-scheme-step-name">
+            <p className='about-project__time-scheme-step-name'>
               Back-end
             </p>
           </li>
-          <li className="about-project__time-scheme-step">
-            <p className="about-project__time-scheme-step-period">
+          <li className='about-project__time-scheme-step'>
+            <p className='about-project__time-scheme-step-period'>
               4 недели
             </p>
-            <p className="about-project__time-scheme-step-name">
+            <p className='about-project__time-scheme-step-name'>
               Front-end
             </p>
           </li>

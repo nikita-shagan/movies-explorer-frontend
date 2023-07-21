@@ -1,32 +1,62 @@
 import SignForm from "../SignForm/SignForm";
-import {Link} from "react-router-dom";
-import {useState} from "react";
+import {useFormWithValidation} from "../../hooks/useFromWithValidation";
+import Input from "../Input/Input";
+import {validateEmail, validatePassword} from "../../utils/validation/inputValidations";
+import {FORM_SUBMIT_ERROR_MESSAGE} from "../../utils/constants/constants";
+import {SIGNUP_ROUTE} from "../../utils/constants/routes";
 
-function Login({ handleSignIn }) {
-  const [errorsVisible, setErrorsVisible] = useState(false);
-
-  const handleSubmit = ({ email, password, emailError, passwordError }) => {
-    if (emailError || passwordError) {
-      setErrorsVisible(true);
-    } else {
-      handleSignIn({ email, password });
+function Login({ handleAuth }) {
+  const form = useFormWithValidation({
+    initValues: {
+      email: '',
+      password: ''
+    },
+    validators: {
+      email: validateEmail,
+      password: validatePassword
     }
+  })
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    form.setIsLoading(true)
+    handleAuth(form.values)
+      .catch((err) => {
+        setTimeout(() => form.setSubmitResultMessage(FORM_SUBMIT_ERROR_MESSAGE), 500)
+        console.log(err)
+      })
+      .finally(() => {
+        setTimeout(() => form.setIsLoading(false), 500)
+      })
   }
 
   return (
     <SignForm
-      formName='login'
       title='Рады видеть!'
       submitText='Войти'
-      footer={
-        <>
-          <p className='sign-form__footer-text'>Ещё не зарегистрированы?</p>
-          <Link to='/signup' className='sign-form__footer-link'>Регистрация</Link>
-        </>
-      }
+      footer={{text: 'Ещё не зарегистрированы?', link: SIGNUP_ROUTE, button: 'Регистрация'}}
+      isValid={form.isValid}
       onSubmit={handleSubmit}
-      errorsVisible={errorsVisible}
-    />
+      submitError={form.submitResultMessage}
+      isLoading={form.isLoading}
+    >
+      <Input
+        label='E-mail'
+        name='email'
+        type='email'
+        error={form.getError('email')}
+        value={form.values.email}
+        onChange={form.handleChange}
+      />
+      <Input
+        label='Пароль'
+        name='password'
+        type='password'
+        error={form.getError('password')}
+        value={form.values.password}
+        onChange={form.handleChange}
+      />
+    </SignForm>
   );
 }
 

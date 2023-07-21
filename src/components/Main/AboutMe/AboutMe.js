@@ -1,5 +1,5 @@
-import './AboutMe.css'
-import photo from '../../../images/photo.png'
+import "./AboutMe.css"
+import photo from "../../../images/photo.jpg"
 
 function AboutMe({ children }) {
   return (
@@ -11,22 +11,25 @@ function AboutMe({ children }) {
         <article className='about-me__content'>
           <div className='about-me__info'>
             <h3 className='about-me__name'>
-              Виталий
+              Никита
             </h3>
             <p className='about-me__job'>
-              Фронтенд-разработчик, 30 лет
+              Full-stack разработчик, 23 года
             </p>
             <p className='about-me__description'>
-              Я родился и живу в Саратове, закончил факультет экономики СГУ.
-              У меня есть жена и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом.
-              Недавно начал кодить. С&nbsp;2015 года работал в компании «СКБ Контур».
-              После того, как прошёл курс по веб-разработке, начал заниматься
-              фриланс-заказами и ушёл с постоянной работы.
+              В прошлом году закончил физмат по профилю учитель математики и информатики.
+              После выпуска начал изучать фронтенд разработку и брать заказы на фрилансе.
+              Последние пол года работал full-stack разработчиком в компании Egsite.
+              Занимался созданием плагинов для wordpress на PHP и React.
+              Также в дополнение к плагинам написал телеграм бота на Node.js (grammY + Express.js)
+              и API для работы с ВК на Java Spring Boot. Увлекаюсь гитарой и шахматами.
+              Люблю решать сложные задачки и радоваться когда все заработало как надо.
             </p>
             <a
               href='https://github.com/nikita-shagan'
               className='about-me__git-repos'
               target='_blank'
+              rel="noreferrer"
             >
               Github
             </a>
